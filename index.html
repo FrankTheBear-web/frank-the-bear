@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Frank the Bear — Official Site</title>
+  <meta name="description" content="Frank the Bear: the cozy bear streaming on Pump.fun with his own $FRANK token. Join the den, watch streams, and catch updates." />
+  <link rel="icon" href="assets/frank-logo.png" />
+  <!-- Open Graph / Twitter -->
+  <meta property="og:title" content="Frank the Bear — Official" />
+  <meta property="og:description" content="Streaming bear on Pump.fun with the community‑driven $FRANK token." />
+  <meta property="og:image" content="assets/frank-og.png" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@bear_the_frank" />
+
+  <style>
+    :root{ --bg:#1a130b;--card:#22170e;--text:#fff7e9;--muted:#d9c9ae;--accent:#f1c232;--accent-2:#d9852b;--stroke:#3a2818;}
+    *{box-sizing:border-box}
+    html,body{margin:0;height:100%;background:radial-gradient(1000px 520px at 12% -8%,#2b1d10 0%,var(--bg) 55%) no-repeat var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial,sans-serif}
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:1160px;margin:0 auto;padding:28px}
+    header{display:flex;align-items:center;gap:18px}
+    header img{width:76px;height:76px;object-fit:contain;filter:drop-shadow(0 6px 18px rgba(0,0,0,.35))}
+    .brand{display:flex;flex-direction:column}
+    .brand h1{margin:0;font-size:clamp(26px,2.6vw,36px)}
+    .brand .handle{color:var(--muted);font-size:14px}
+    .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center;padding:28px 0}
+    .card{background:linear-gradient(180deg,#2a1c10,#20150d);border:1px solid var(--stroke);border-radius:18px;padding:22px;box-shadow:0 10px 40px rgba(0,0,0,.35)}
+    .banner img{width:100%;border-radius:18px;border:1px solid var(--stroke)}
+    .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:8px}
+    .btn{display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border-radius:12px;border:1px solid var(--stroke);background:#2a1c10;transition:.2s}
+    .btn:hover{transform:translateY(-1px);background:#2f2114}
+    .btn.primary{background:linear-gradient(180deg,#f6d363,#e7a91d);color:#3b2a0e;border:none}
+    .btn.accent{background:linear-gradient(180deg,#d38a3a,#b56a22);color:#1a0e06;border:none}
+    .badge{display:inline-block;background:#281b10;border:1px dashed #4a311e;color:var(--muted);padding:6px 10px;border-radius:999px;font-size:12px}
+    .section{padding:32px 0}
+    .section h3{margin:0 0 12px;font-size:22px}
+    .muted{color:var(--muted)}
+    .panel{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:16px}
+    .panel .tile{background:linear-gradient(180deg,#26190f,#1e130b);border:1px solid var(--stroke);border-radius:16px;padding:18px}
+    .k{color:var(--accent)}
+    .token{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+    .token .col{background:linear-gradient(180deg,#271a10,#1f140c);border:1px solid var(--stroke);border-radius:16px;padding:18px}
+    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace}
+    .copy{display:flex;gap:10px}
+    .copy input{flex:1;background:#1a120b;border:1px solid #4a311e;color:var(--text);padding:10px 12px;border-radius:10px}
+    .copy button{padding:10px 12px;border-radius:10px;border:1px solid var(--stroke);background:#2a1c10;color:#fff7e9}
+    .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .steps .step{border:1px solid var(--stroke);background:linear-gradient(180deg,#24180f,#1c120a);border-radius:14px;padding:16px}
+    .num{display:inline-flex;width:28px;height:28px;border-radius:999px;align-items:center;justify-content:center;background:var(--accent);color:#241a06;font-weight:700;margin-right:8px}
+    .roadmap{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .rm{background:linear-gradient(180deg,#22170e,#1b1109);border:1px solid var(--stroke);border-radius:14px;padding:16px;position:relative}
+    .rm.complete{opacity:.72}
+    .timer{margin-top:10px;display:flex;align-items:center;gap:8px;font-weight:600}
+    .timer .label{display:inline-block;background:#2b1c10;border:1px solid var(--stroke);padding:4px 8px;border-radius:999px;color:var(--muted);font-size:12px}
+    .timer .t{font-variant-numeric:tabular-nums;letter-spacing:.5px}
+    .feed{display:grid;grid-template-columns:1fr;gap:16px}
+    footer{margin-top:40px;padding-top:22px;border-top:1px solid var(--stroke);display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;color:var(--muted)}
+    @media(max-width:980px){
+      .hero{grid-template-columns:1fr}
+      .panel{grid-template-columns:1fr}
+      .steps{grid-template-columns:1fr}
+      .token{grid-template-columns:1fr}
+      .roadmap{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <img src="assets/frank-logo.png" alt="Frank the Bear logo" />
+    <div class="brand"><h1>Frank the Bear</h1><div class="handle">Official site · <a href="https://x.com/bear_the_frank" target="_blank" rel="noopener">@bear_the_frank</a></div></div>
+    <div style="margin-left:auto"><span class="badge">Cozy streams · $FRANK token · Pump.fun</span></div>
+  </header>
+
+  <section class="hero">
+    <div class="card">
+      <h2>Welcome to the Den 🐻</h2>
+      <p>I'm Frank — a friendly bear who streams, vibes, and experiments with on‑chain fun. Follow the journey and learn more about the community‑driven <span class="k">$FRANK</span> token.</p>
+      <div class="cta">
+        <a class="btn primary" href="https://x.com/bear_the_frank" target="_blank" rel="noopener">Follow on X</a>
+        <a class="btn accent" href="#token">View $FRANK</a>
+        <a class="btn" href="#how-to-buy">How to Buy</a>
+      </div>
+      <div class="panel" style="margin-top:18px">
+        <div class="tile"><strong>Streams</strong><br><span class="muted">Casual bear chats, meme markets, and good vibes.</span></div>
+        <div class="tile"><strong>Community</strong><br><span class="muted">No promises. No financial advice. Just fun.</span></div>
+        <div class="tile"><strong>On‑chain</strong><br><span class="muted">Experimenting with tokens & tools on Solana.</span></div>
+      </div>
+    </div>
+    <div class="banner"><img src="assets/frank-og.png" alt="Frank the Bear banner"></div>
+  </section>
+
+  <section id="token" class="section">
+    <h3>$FRANK Token</h3>
+    <p class="muted">Community‑driven meme token inspired by the streams. No roadmap guarantees, no expectation of profit, and absolutely not investment advice. Always DYOR.</p>
+    <div class="token" style="margin-top:12px">
+      <div class="col">
+        <strong>Contract Address (Solana)</strong>
+        <div class="copy" style="margin-top:8px">
+          <input id="ca" class="mono" value="PASTE_CONTRACT_ADDRESS_HERE" readonly />
+          <button id="copyBtn">Copy</button>
+        </div>
+        <div class="cta" style="margin-top:12px">
+          <a class="btn" id="pumpLink" href="#" target="_blank" rel="noopener">View on Pump.fun</a>
+          <a class="btn" id="dexsLink" href="#" target="_blank" rel="noopener">Chart on DEXScreener</a>
+        </div>
+      </div>
+      <div class="col">
+        <strong>Tokenomics (example)</strong>
+        <ul class="muted" style="padding-left:18px;margin-top:8px">
+          <li>Supply: 1,000,000,000 $FRANK</li>
+          <li>Launch: Pump.fun</li>
+          <li>Liquidity & taxes: per Pump.fun mechanics</li>
+          <li>Utility: community memes, tipping, and fun on stream</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="how-to-buy" class="section">
+    <h3>How to Buy (Solana)</h3>
+    <div class="steps" style="margin-top:8px">
+      <div class="step"><span class="num">1</span><strong>Get a Wallet</strong><br><span class="muted">Install Phantom or another Solana wallet, write down your seed phrase safely.</span></div>
+      <div class="step"><span class="num">2</span><strong>Fund with SOL</strong><br><span class="muted">Buy SOL on an exchange or on‑ramp, then send it to your wallet.</span></div>
+      <div class="step"><span class="num">3</span><strong>Swap for $FRANK</strong><br><span class="muted">Use Pump.fun or a DEX. Paste the contract address to avoid scams.</span></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h3>Roadmap</h3>
+    <p class="muted">Each phase runs for <strong>7 days</strong>. Timers update live and persist locally in your browser.</p>
+    <div class="roadmap" style="margin-top:8px">
+      <div class="rm" data-phase="0"><strong>Phase 1: Launch</strong><br><span class="muted">Kick off $FRANK with streams, site, and token launch; set brand kit & assets.</span><div class="timer"><span class="label">—</span><span class="t">--:--:--:--</span></div></div>
+      <div class="rm" data-phase="1"><strong>Phase 2: Gaming</strong><br><span class="muted">Bear‑themed mini‑games, chat challenges, and on‑stream game nights.</span><div class="timer"><span class="label">—</span><span class="t">--:--:--:--</span></div></div>
+      <div class="rm" data-phase="2"><strong>Phase 3: Charity</strong><br><span class="muted">Quarterly donations to wildlife & forest charities; public reports.</span><div class="timer"><span class="label">—</span><span class="t">--:--:--:--</span></div></div>
+      <div class="rm" data-phase="3"><strong>Phase 4: Merch & Community</strong><br><span class="muted">Merch drops, sticker pack, meme contests, community collabs.</span><div class="timer"><span class="label">—</span><span class="t">--:--:--:--</span></div></div>
+      <div class="rm" data-phase="4"><strong>Phase 5: Streaming Expansion</strong><br><span class="muted">Long‑form streams, guest collabs, IRL segments, language captions.</span><div class="timer"><span class="label">—</span><span class="t">--:--:--:--</span></div></div>
+      <div class="rm" data-phase="5"><strong>Phase 6: Ecosystem Growth</strong><br><span class="muted">On‑chain tipping, integrations, and tools that make the den more fun.</span><div class="timer"><span class="label">—</span><span class="t">--:--:--:--</span></div></div>
+    </div>
+    <div class="cta" style="margin-top:14px"><button class="btn" id="resetTimers">Reset 7‑day cycle</button></div>
+  </section>
+
+  <section class="section">
+    <h3>Giveaways</h3>
+    <p class="muted">We love rewarding our community! Join special Frank the Bear giveaways to win merch, tokens, and more.</p>
+    <div class="panel" style="margin-top:12px">
+      <div class="tile"><strong>Weekly Draws</strong><br><span class="muted">Follow Frank on X and engage with posts to qualify.</span></div>
+      <div class="tile"><strong>Stream Events</strong><br><span class="muted">Exclusive giveaways during live streams — stay tuned!</span></div>
+      <div class="tile"><strong>Community Rewards</strong><br><span class="muted">Fan art, memes, and contest winners get special prizes.</span></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h3>Airdrops</h3>
+    <p class="muted">From time to time, $FRANK holders will receive surprise airdrops as a thank you for being part of the den.</p>
+    <div class="steps" style="margin-top:12px">
+      <div class="step"><span class="num">1</span><strong>Hold $FRANK</strong><br><span class="muted">Make sure tokens are in your wallet.</span></div>
+      <div class="step"><span class="num">2</span><strong>Stay Updated</strong><br><span class="muted">Announcements are made on X and in streams.</span></div>
+      <div class="step"><span class="num">3</span><strong>Claim Rewards</strong><br><span class="muted">Eligible wallets will automatically receive airdrops or instructions.</span></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h3>Latest from X</h3>
+    <div class="feed card">
+      <a class="twitter-timeline" data-theme="dark" data-chrome="noheader nofooter noborders" href="https://x.com/bear_the_frank">Tweets by Frank</a>
+    </div>
+  </section>
+
+  <footer><div>© <span id="y"></span> Frank the Bear</div></footer>
+</div>
+
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<script>
+  const CONTRACT_ADDRESS = "PASTE_CONTRACT_ADDRESS_HERE"; // e.g. 5cY...abc
+  const STORAGE_KEY = 'frank_roadmap_start_v1';
+  const PHASE_MS = 7 * 24 * 60 * 60 * 1000;
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const yearEl = document.getElementById('y'); if (yearEl) yearEl.textContent = new Date().getFullYear();
+    const pumpLink = document.getElementById('pumpLink');
+    const dexsLink = document.getElementById('dexsLink');
+    const caInput  = document.getElementById('ca');
+    if (caInput) caInput.value = CONTRACT_ADDRESS;
+    if (pumpLink) pumpLink.href = CONTRACT_ADDRESS === 'PASTE_CONTRACT_ADDRESS_HERE' ? '#' : `https://pump.fun/coin/${CONTRACT_ADDRESS}`;
+    if (dexsLink) dexsLink.href = CONTRACT_ADDRESS === 'PASTE_CONTRACT_ADDRESS_HERE' ? '#' : `https://dexscreener.com/solana/${CONTRACT_ADDRESS}`;
+
+    const copyBtn = document.getElementById('copyBtn');
+    if (copyBtn && caInput) {
+      copyBtn.addEventListener('click', () => {
+        caInput.select(); caInput.setSelectionRange(0,99999);
+        document.execCommand('copy');
+        const original = caInput.value; caInput.value = 'Copied!'; setTimeout(()=>{ caInput.value = original; }, 800);
+      });
+    }
+
+    function getBaseStart(){ let v = localStorage.getItem(STORAGE_KEY); if(!v){ v = Date.now().toString(); localStorage.setItem(STORAGE_KEY, v);} return parseInt(v,10); }
+    function formatLeft(ms){ if(ms<0) ms=0; const d=Math.floor(ms/86400000); ms%=86400000; const h=Math.floor(ms/3600000); ms%=3600000; const m=Math.floor(ms/60000); ms%=60000; const s=Math.floor(ms/1000); const pad=n=>String(n).padStart(2,'0'); return `${pad(d)}d:${pad(h)}h:${pad(m)}m:${pad(s)}s`; }
+    function refreshTimers(){
+      const base = getBaseStart();
+      document.querySelectorAll('.rm').forEach(card=>{
+        const i = parseInt(card.getAttribute('data-phase'),10) || 0;
+        const start = base + i*PHASE_MS;
+        const end = start + PHASE_MS;
+        const now = Date.now();
+        const label = card.querySelector('.timer .label');
+        const t = card.querySelector('.timer .t');
+        if(!label || !t) return;
+        card.classList.remove('complete');
+        if(now < start){ label.textContent='Starts in'; t.textContent=formatLeft(start-now); }
+        else if(now < end){ label.textContent='Ends in'; t.textContent=formatLeft(end-now); }
+        else { label.textContent='Completed'; t.textContent='00d:00h:00m:00s'; card.classList.add('complete'); }
+      });
+    }
+    setInterval(refreshTimers, 1000); refreshTimers();
+
+    const resetBtn = document.getElementById('resetTimers');
+    if(resetBtn){ resetBtn.addEventListener('click', ()=>{ localStorage.setItem(STORAGE_KEY, Date.now().toString()); refreshTimers(); }); }
+
+    // Quick console tests
+    console.assert(document.getElementById('y'), 'Footer year element (#y) should exist');
+    console.assert(document.querySelectorAll('.rm').length === 6, 'There should be 6 roadmap phases');
+    console.assert(document.querySelector('.rm .timer .label'), 'Timer label span should exist');
+    console.assert(document.querySelector('.rm .timer .t'), 'Timer value span should exist');
+  });
+</script>
+</body>
+</html>
