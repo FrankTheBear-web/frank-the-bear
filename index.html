@@ -70,6 +70,10 @@
     /* Roadmap */
     .roadmap{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
     .rm{background:linear-gradient(180deg,#22170e,#1b1109);border:1px solid var(--stroke);border-radius:14px;padding:16px}
+    .rm.complete{opacity:.72}
+    .timer{margin-top:10px;display:flex;align-items:center;gap:8px;font-weight:600}
+    .timer .label{display:inline-block;background:#2b1c10;border:1px solid var(--stroke);padding:4px 8px;border-radius:999px;color:var(--muted);font-size:12px}
+    .timer .t{font-variant-numeric:tabular-nums;letter-spacing:.3px}
 
     /* Feed */
     .feed{display:grid;grid-template-columns:1fr;gap:16px}
@@ -175,16 +179,17 @@
       </div>
     </section>
 
-    <!-- Roadmap (timers removed) -->
+    <!-- Roadmap (with timers; Phase 3 = Giveaway) -->
     <section class="section" id="roadmap">
       <h3>Roadmap</h3>
+      <p class="muted">Each phase runs for <strong>7 days</strong>. Timers update live and persist locally in your browser.</p>
       <div class="roadmap" style="margin-top:8px">
-        <div class="rm"><strong>Phase 1: Launch</strong><br><span class="muted">Site + token + brand kit.</span></div>
-        <div class="rm"><strong>Phase 2: Gaming</strong><br><span class="muted">Mini-games & interactive streams.</span></div>
-        <div class="rm"><strong>Phase 3: Charity</strong><br><span class="muted">Wildlife & forest donations.</span></div>
-        <div class="rm"><strong>Phase 4: Merch & Community</strong><br><span class="muted">Merch drops & collabs.</span></div>
-        <div class="rm"><strong>Phase 5: Streaming Expansion</strong><br><span class="muted">Long-form streams & guests.</span></div>
-        <div class="rm"><strong>Phase 6: Ecosystem Growth</strong><br><span class="muted">Tipping & fun integrations.</span></div>
+        <div class="rm" data-phase="0"><strong>Phase 1: Launch</strong><br><span class="muted">Site + token + brand kit.</span><div class="timer"><span class="label">—</span><span class="t">--:--:--:--</span></div></div>
+        <div class="rm" data-phase="1"><strong>Phase 2: Gaming</strong><br><span class="muted">Mini-games & interactive streams.</span><div class="timer"><span class="label">—</span><span class="t">--:--:--:--</span></div></div>
+        <div class="rm" data-phase="2"><strong>Phase 3: Giveaway</strong><br><span class="muted">Community prize drops & contests.</span><div class="timer"><span class="label">—</span><span class="t">--:--:--:--</span></div></div>
+        <div class="rm" data-phase="3"><strong>Phase 4: Merch & Community</strong><br><span class="muted">Merch drops & collabs.</span><div class="timer"><span class="label">—</span><span class="t">--:--:--:--</span></div></div>
+        <div class="rm" data-phase="4"><strong>Phase 5: Streaming Expansion</strong><br><span class="muted">Long-form streams & guests.</span><div class="timer"><span class="label">—</span><span class="t">--:--:--:--</span></div></div>
+        <div class="rm" data-phase="5"><strong>Phase 6: Ecosystem Growth</strong><br><span class="muted">Tipping & fun integrations.</span><div class="timer"><span class="label">—</span><span class="t">--:--:--:--</span></div></div>
       </div>
     </section>
 
@@ -211,23 +216,63 @@
   <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
   <script>
-    // Copy CA
-    document.addEventListener('DOMContentLoaded', () => {
-      const y = document.getElementById('y');
-      if (y) y.textContent = new Date().getFullYear();
+    // ==== 7-day sequential timers (no reset button) ====
+    (function(){
+      const STORAGE_KEY = 'frank_roadmap_start_v1';
+      const PHASE_MS = 7 * 24 * 60 * 60 * 1000;
 
-      const caInput = document.getElementById('ca');
-      const copyBtn = document.getElementById('copyBtn');
-      if (copyBtn && caInput) {
-        copyBtn.addEventListener('click', () => {
-          caInput.select(); caInput.setSelectionRange(0, 99999);
-          document.execCommand('copy');
-          const orig = caInput.value;
-          caInput.value = 'Copied!';
-          setTimeout(()=>{ caInput.value = orig; }, 800);
+      function getBaseStart(){
+        let v = localStorage.getItem(STORAGE_KEY);
+        if(!v){ v = Date.now().toString(); localStorage.setItem(STORAGE_KEY, v); }
+        return parseInt(v, 10);
+      }
+      function formatLeft(ms){
+        if (ms < 0) ms = 0;
+        const d = Math.floor(ms/86400000); ms%=86400000;
+        const h = Math.floor(ms/3600000); ms%=3600000;
+        const m = Math.floor(ms/60000); ms%=60000;
+        const s = Math.floor(ms/1000);
+        const pad = n=>String(n).padStart(2,'0');
+        return `${pad(d)}d:${pad(h)}h:${pad(m)}m:${pad(s)}s`;
+      }
+      function refreshTimers(){
+        const base = getBaseStart();
+        document.querySelectorAll('.rm').forEach(card=>{
+          const i = parseInt(card.getAttribute('data-phase') || '0', 10);
+          const start = base + i*PHASE_MS;
+          const end   = start + PHASE_MS;
+          const now   = Date.now();
+          const label = card.querySelector('.timer .label');
+          const t     = card.querySelector('.timer .t');
+          if(!label || !t) return;
+          card.classList.remove('complete');
+          if(now < start){ label.textContent = 'Starts in'; t.textContent = formatLeft(start - now); }
+          else if(now < end){ label.textContent = 'Ends in'; t.textContent = formatLeft(end - now); }
+          else { label.textContent = 'Completed'; t.textContent = '00d:00h:00m:00s'; card.classList.add('complete'); }
         });
       }
-    });
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const y = document.getElementById('y');
+        if (y) y.textContent = new Date().getFullYear();
+
+        // Copy CA
+        const caInput = document.getElementById('ca');
+        const copyBtn = document.getElementById('copyBtn');
+        if (copyBtn && caInput) {
+          copyBtn.addEventListener('click', () => {
+            caInput.select(); caInput.setSelectionRange(0, 99999);
+            document.execCommand('copy');
+            const orig = caInput.value;
+            caInput.value = 'Copied!';
+            setTimeout(()=>{ caInput.value = orig; }, 800);
+          });
+        }
+
+        setInterval(refreshTimers, 1000);
+        refreshTimers();
+      });
+    })();
   </script>
 </body>
 </html>
