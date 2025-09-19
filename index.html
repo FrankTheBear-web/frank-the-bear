@@ -4,13 +4,18 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Frank the Bear — Official Site</title>
-  <meta name="description" content="Frank the Bear: the cozy bear streaming on Pump.fun with his own $FRANK token. Join the den, watch streams, and catch updates." />
+  <meta name="description" content="Frank the Bear: the cozy bear streaming on Pump.fun with the community-driven $FRANK token. Join the den, watch streams, and catch updates." />
 
   <!-- Favicon & Social -->
-  <link rel="icon" href="frank-logo.png?v=3" />
+  <link rel="icon" href="frank-logo.png?v=4" />
   <meta property="og:title" content="Frank the Bear — Official" />
   <meta property="og:description" content="Streaming bear on Pump.fun with the community-driven $FRANK token." />
-  <meta property="og:image" content="frank-og.png?v=3" />
+  <!-- UPDATE these two lines if your Pages URL differs -->
+  <meta property="og:image" content="https://frankthebear-web.github.io/frank-the-bear/frank-og.png?v=4" />
+  <meta name="twitter:image" content="https://frankthebear-web.github.io/frank-the-bear/frank-og.png?v=4" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
   <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@bear_the_frank" />
@@ -90,7 +95,7 @@
   <div class="wrap">
     <!-- Header -->
     <header>
-      <img src="frank-logo.png?v=3" alt="Frank the Bear logo" />
+      <img src="frank-logo.png?v=4" alt="Frank the Bear logo" />
       <div class="brand">
         <h1>Frank the Bear</h1>
         <div class="handle">Official site · <a href="https://x.com/bear_the_frank" target="_blank" rel="noopener">@bear_the_frank</a></div>
@@ -117,7 +122,7 @@
       </div>
 
       <div class="banner" aria-label="Banner image">
-        <img src="frank-og.png?v=3" alt="Frank the Bear banner" />
+        <img src="frank-og.png?v=4" alt="Frank the Bear banner" />
       </div>
     </section>
 
@@ -179,10 +184,10 @@
       </div>
     </section>
 
-    <!-- Roadmap (with timers; Phase 3 = Giveaway) -->
+    <!-- Roadmap (sequential timers with custom durations; Phase 3 = Giveaway) -->
     <section class="section" id="roadmap">
       <h3>Roadmap</h3>
-      <p class="muted">Each phase runs for <strong>7 days</strong>. Timers update live and persist locally in your browser.</p>
+      <p class="muted">Phases run in sequence with custom durations. Timers update live and persist locally.</p>
       <div class="roadmap" style="margin-top:8px">
         <div class="rm" data-phase="0"><strong>Phase 1: Launch</strong><br><span class="muted">Site + token + brand kit.</span><div class="timer"><span class="label">—</span><span class="t">--:--:--:--</span></div></div>
         <div class="rm" data-phase="1"><strong>Phase 2: Gaming</strong><br><span class="muted">Mini-games & interactive streams.</span><div class="timer"><span class="label">—</span><span class="t">--:--:--:--</span></div></div>
@@ -216,16 +221,29 @@
   <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
   <script>
-    // ==== 7-day sequential timers (no reset button) ====
+    // ==== Sequential phase timers with custom durations ====
+    // Phase durations in DAYS: [Launch=3, Gaming=7, Giveaway=5, Merch=7, Streaming=10, Ecosystem=10]
     (function(){
       const STORAGE_KEY = 'frank_roadmap_start_v1';
-      const PHASE_MS = 7 * 24 * 60 * 60 * 1000;
+      const PHASE_DAYS  = [3, 7, 5, 7, 10, 10];
+
+      function day(ms){ return ms * 24 * 60 * 60 * 1000; }
+      const PHASE_MS = PHASE_DAYS.map(d => d * 24 * 60 * 60 * 1000);
 
       function getBaseStart(){
         let v = localStorage.getItem(STORAGE_KEY);
         if(!v){ v = Date.now().toString(); localStorage.setItem(STORAGE_KEY, v); }
         return parseInt(v, 10);
       }
+
+      // Compute cumulative start time for phase i
+      function phaseStart(base, i){
+        let sum = 0;
+        for(let k=0;k<i;k++) sum += PHASE_MS[k];
+        return base + sum;
+      }
+      function phaseEnd(base, i){ return phaseStart(base,i) + PHASE_MS[i]; }
+
       function formatLeft(ms){
         if (ms < 0) ms = 0;
         const d = Math.floor(ms/86400000); ms%=86400000;
@@ -235,20 +253,31 @@
         const pad = n=>String(n).padStart(2,'0');
         return `${pad(d)}d:${pad(h)}h:${pad(m)}m:${pad(s)}s`;
       }
+
       function refreshTimers(){
         const base = getBaseStart();
         document.querySelectorAll('.rm').forEach(card=>{
-          const i = parseInt(card.getAttribute('data-phase') || '0', 10);
-          const start = base + i*PHASE_MS;
-          const end   = start + PHASE_MS;
+          const iAttr = card.getAttribute('data-phase');
+          const i = Math.max(0, parseInt(iAttr||'0',10));
+          const start = phaseStart(base, i);
+          const end   = phaseEnd(base, i);
           const now   = Date.now();
           const label = card.querySelector('.timer .label');
           const t     = card.querySelector('.timer .t');
           if(!label || !t) return;
+
           card.classList.remove('complete');
-          if(now < start){ label.textContent = 'Starts in'; t.textContent = formatLeft(start - now); }
-          else if(now < end){ label.textContent = 'Ends in'; t.textContent = formatLeft(end - now); }
-          else { label.textContent = 'Completed'; t.textContent = '00d:00h:00m:00s'; card.classList.add('complete'); }
+          if(now < start){
+            label.textContent = 'Starts in';
+            t.textContent = formatLeft(start - now);
+          }else if(now < end){
+            label.textContent = 'Ends in';
+            t.textContent = formatLeft(end - now);
+          }else{
+            label.textContent = 'Completed';
+            t.textContent = '00d:00h:00m:00s';
+            card.classList.add('complete');
+          }
         });
       }
 
